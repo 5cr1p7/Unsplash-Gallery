@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">kts-android-09-2021</string>
+    <string name="firstOnboardingScreenText">To the library of over 2 million free high-resolution photos</string>
+    <string name="welcomeText">Welcome to Unsplash</string>
+    <string name="skipText">Skip</string>
 </resources>
