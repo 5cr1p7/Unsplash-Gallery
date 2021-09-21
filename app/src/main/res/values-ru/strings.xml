@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">kts-android-09-2021</string>
+    <string name="welcomeText">Добро пожаловать в Unsplash</string>
+    <string name="firstOnboardingScreenText">В библиотеку из более чем 2 миллионов фотографий высокого качества</string>
+    <string name="skipText">Пропустить</string>
+</resources>
