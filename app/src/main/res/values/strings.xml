@@ -3,4 +3,11 @@
     <string name="firstOnboardingScreenText">To the library of over 2 million free high-resolution photos</string>
     <string name="welcomeText">Welcome to Unsplash</string>
     <string name="skipText">Skip</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="passMinLength">Minimum password length is 8</string>
+    <string name="incorrectEmail">Incorrect email address</string>
+    <string name="loginBtn">Login</string>
+    <string name="no_account_yet">No account yet?</string>
+    <string name="next">next</string>
 </resources>

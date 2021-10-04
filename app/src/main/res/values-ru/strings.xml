@@ -4,4 +4,11 @@
     <string name="welcomeText">Добро пожаловать в Unsplash</string>
     <string name="firstOnboardingScreenText">В библиотеку из более чем 2 миллионов фотографий высокого качества</string>
     <string name="skipText">Пропустить</string>
+    <string name="password">Пароль</string>
+    <string name="passMinLength">Минимальная длина пароля 8 символов</string>
+    <string name="incorrectEmail">Неверный адрес электронной почты</string>
+    <string name="email">Эл. почта</string>
+    <string name="loginBtn">Войти</string>
+    <string name="no_account_yet">Еще нет аккаунта?</string>
+    <string name="next">Вперед</string>
 </resources>
