@@ -9,7 +9,7 @@
         android:id="@+id/firstScreenFragment"
         android:name="com.ramilkapev.kts_android_09_2021.ui.onBoarding.FirstScreenFragment"
         android:label="fragment_first_screen"
-        tools:layout="@layout/fragment_first_screen" >
+        tools:layout="@layout/fragment_first_screen">
         <action
             android:id="@+id/action_firstScreenFragment_to_loginFragment"
             app:destination="@id/loginFragment"
