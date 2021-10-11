@@ -25,11 +25,11 @@ data class User(
 //    @Json(name = "location")
 //    val location: String?,
     @Json(name = "name")
-    val name: String?,
+    val name: String,
 //    @Json(name = "portfolio_url")
 //    val portfolioUrl: String?,
     @Json(name = "profile_image")
-    val profileImage: ProfileImage?,
+    val profileImage: ProfileImage,
 //    @Json(name = "social")
 //    val social: Social?,
 //    @Json(name = "total_collections")

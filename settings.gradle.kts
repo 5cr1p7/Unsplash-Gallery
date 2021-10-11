@@ -19,6 +19,9 @@ pluginManagement {
             if (requested.id.id.startsWith("com.google.dagger")) {
                 useModule("hilt-android-gradle-plugin:2.38.1")
             }
+            if (requested.id.id.startsWith("androidx.navigation.safeargs.kotlin")) {
+                useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
+            }
         }
     }
 }

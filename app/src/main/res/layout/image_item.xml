@@ -12,6 +12,7 @@
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/avatarShape50Percent"
         android:src="@mipmap/ic_launcher"/>
 
     <androidx.appcompat.widget.AppCompatTextView

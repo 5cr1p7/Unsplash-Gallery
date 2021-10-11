@@ -8,8 +8,8 @@ import com.squareup.moshi.JsonClass
 data class SearchImage<T>(
     @Json(name = "results")
     val results: List<T>?,
-    @Json(name = "total")
-    val total: Int?,
-    @Json(name = "total_pages")
-    val totalPages: Int?
+//    @Json(name = "total")
+//    val total: Int?,
+//    @Json(name = "total_pages")
+//    val totalPages: Int?
 )

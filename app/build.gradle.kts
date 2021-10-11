@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 repositories {
@@ -20,6 +21,8 @@ android {
         versionName = Config.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "insplash"
     }
 
     buildTypes {
@@ -57,6 +60,7 @@ dependencies {
     implementation(Dependencies.Lifecycle.viewModelSavedState)
     implementation(Dependencies.Lifecycle.livedata)
     implementation(Dependencies.Lifecycle.commonJava)
+    implementation(Dependencies.Lifecycle.runtimeKtx)
 
     // Moshi
     implementation(Dependencies.Network.moshi)
@@ -84,6 +88,9 @@ dependencies {
 
     // Paging
     implementation(Dependencies.RecyclerViewHelpers.paging)
+
+    // Auth
+    implementation(Dependencies.Network.auth)
 
     // Tests
     testImplementation(Dependencies.Test.jUnit)

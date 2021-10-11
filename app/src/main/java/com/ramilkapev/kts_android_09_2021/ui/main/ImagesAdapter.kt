@@ -7,12 +7,13 @@ import com.ramilkapev.kts_android_09_2021.networking.models.Result
 import com.ramilkapev.kts_android_09_2021.networking.models.User
 
 class ImagesAdapter(
-    onIncreaseLike: (item: Result) -> Unit
+    onIncreaseLike: (item: Result) -> Unit,
+    onClick: (item: Result) -> Unit
 ): AsyncListDifferDelegationAdapter<Any>(DiffCallback()) {
 
     init {
         delegatesManager
-            .addDelegate(ImageItemDelegate(onIncreaseLike))
+            .addDelegate(ImageItemDelegate(onIncreaseLike, onClick))
             .addDelegate(UserItemDelegate())
             .addDelegate(PageLoadingAdapterDelegate())
     }

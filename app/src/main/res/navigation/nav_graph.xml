@@ -31,5 +31,17 @@
         android:id="@+id/mainFragment"
         android:name="com.ramilkapev.kts_android_09_2021.ui.main.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_photoDetailsFragment"
+            app:destination="@id/photoDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailsFragment"
+        android:name="com.ramilkapev.kts_android_09_2021.PhotoDetailsFragment"
+        android:label="PhotoDetailsFragment">
+        <argument
+            android:name="photoId"
+            app:argType="string" />
+    </fragment>
 </navigation>

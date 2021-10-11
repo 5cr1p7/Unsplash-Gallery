@@ -10,4 +10,7 @@
     <string name="loginBtn">Login</string>
     <string name="no_account_yet">No account yet?</string>
     <string name="next">next</string>
+    <string name="loading_error">Ошибка загрузки</string>
+    <string name="network_error">Ошибка загрузки, проверьте настройки сети</string>
+    <string name="token_error">Ошибка получения токена</string>
 </resources>

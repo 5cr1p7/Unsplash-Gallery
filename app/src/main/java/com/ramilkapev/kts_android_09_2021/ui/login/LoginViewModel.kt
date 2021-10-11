@@ -1,12 +1,76 @@
 package com.ramilkapev.kts_android_09_2021.ui.login
 
+import android.app.Application
+import android.content.Intent
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.*
+import com.ramilkapev.kts_android_09_2021.AuthRepository
+import com.ramilkapev.kts_android_09_2021.R
+import com.ramilkapev.kts_android_09_2021.utils.SingleLiveEvent
+import net.openid.appauth.AuthorizationException
+import net.openid.appauth.AuthorizationService
+import net.openid.appauth.TokenRequest
 
-class LoginViewModel(state: SavedStateHandle): ViewModel() {
+class LoginViewModel(application: Application, state: SavedStateHandle) :
+    AndroidViewModel(application) {
+
+    private val authRepository = AuthRepository()
+    private val authService: AuthorizationService = AuthorizationService(getApplication())
+    private val openAuthPageLiveEvent = SingleLiveEvent<Intent>()
+    private val toastLiveEvent = SingleLiveEvent<Int>()
+    private val loadingMutableLiveData = MutableLiveData(false)
+    private val authSuccessLiveEvent = SingleLiveEvent<Unit>()
+    private val errorLiveData = SingleLiveEvent<Unit>()
+
+    val error: LiveData<Unit>
+        get() = errorLiveData
+
+    val openAuthPageLiveData: LiveData<Intent>
+        get() = openAuthPageLiveEvent
+
+    val loadingLiveData: LiveData<Boolean>
+        get() = loadingMutableLiveData
+
+    val toastLiveData: LiveData<Int>
+        get() = toastLiveEvent
+
+    val authSuccessLiveData: LiveData<Unit>
+        get() = authSuccessLiveEvent
+
+    fun onAuthCodeFailed(exception: AuthorizationException) {
+        toastLiveEvent.postValue(R.string.token_error)
+    }
+
+    fun onAuthCodeReceived(tokenRequest: TokenRequest) {
+        loadingMutableLiveData.postValue(true)
+        authRepository.performTokenRequest(
+            authService = authService,
+            tokenRequest = tokenRequest,
+            onComplete = {
+                loadingMutableLiveData.postValue(false)
+                authSuccessLiveEvent.postValue(Unit)
+            },
+            onError = {
+                loadingMutableLiveData.postValue(false)
+                toastLiveEvent.postValue(R.string.token_error)
+            }
+        )
+    }
+
+    fun openLoginPage() {
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setToolbarColor(ContextCompat.getColor(getApplication(), R.color.background_color))
+            .build()
+
+        val openAuthPageIntent = authService.getAuthorizationRequestIntent(
+            authRepository.getAuthRequest(),
+            customTabsIntent
+        )
+
+        openAuthPageLiveEvent.postValue(openAuthPageIntent)
+    }
 
     fun validateEmail(email: String): Boolean {
         return when {
@@ -42,6 +106,16 @@ class LoginViewModel(state: SavedStateHandle): ViewModel() {
         set(value) {
             savedStateHandle.set(PASS, value)
         }
+
+    override fun onCleared() {
+        super.onCleared()
+        authService.dispose()
+    }
+
+    private fun onLoadingError() {
+        loadingMutableLiveData.postValue(false)
+        errorLiveData.postValue(Unit)
+    }
 
     companion object {
         private val EMAIL = "email"
