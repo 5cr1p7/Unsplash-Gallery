@@ -2,10 +2,13 @@ package com.ramilkapev.kts_android_09_2021.ui.login
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,8 +31,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         with(viewLoginBinding) {
             emailTv.doOnTextChanged { text, start, before, count ->
-                emailIsValid = Patterns.EMAIL_ADDRESS.matcher(text.toString()).matches()
-                if (!emailIsValid) {
+
+                if (!loginViewModel.validateEmail(emailTv.text.toString())) {
                     emailTvLayout.error = getString(R.string.incorrectEmail)
                     loginBtn.isEnabled = false
                 } else {
@@ -43,7 +46,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
             passwordTv.doOnTextChanged { text, start, before, count ->
-                if (text?.length!! <= 8) {
+                if (!loginViewModel.validatePass(passwordTv.text.toString())) {
                     passwordTv.error = getString(R.string.passMinLength)
                     loginBtn.isEnabled = false
                     passIsValid = false
@@ -58,8 +61,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
             loginBtn.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                login()
             }
+        }
+    }
+
+    private fun login() {
+        with(viewLoginBinding) {
+            loginBtn.isEnabled = false
+            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
         }
     }
 
