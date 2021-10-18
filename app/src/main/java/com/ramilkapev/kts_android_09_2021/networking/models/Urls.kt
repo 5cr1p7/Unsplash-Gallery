@@ -11,7 +11,7 @@ data class Urls(
 //    @Json(name = "raw")
 //    val raw: String?,
     @Json(name = "regular")
-    val regular: String?,
+    val regular: String,
 //    @Json(name = "small")
 //    val small: String?,
 //    @Json(name = "thumb")

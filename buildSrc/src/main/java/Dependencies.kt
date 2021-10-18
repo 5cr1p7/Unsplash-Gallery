@@ -14,6 +14,7 @@ object Dependencies {
         const val viewModelSavedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
         const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
         const val commonJava = "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+        const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
     }
 
     object Navigation {
@@ -36,9 +37,10 @@ object Dependencies {
         const val moshiKotlin = "com.squareup.moshi:moshi-kotlin:$moshiVersion"
         const val moshiKapt = "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
-
         const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
         const val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+
+        const val auth = "net.openid:appauth:0.9.1"
     }
 
     object Logging {
@@ -58,12 +60,5 @@ object Dependencies {
         const val jUnit = "junit:junit:4.+"
         const val androidJUnit = "androidx.test.ext:junit:1.1.2"
         const val espresso = "androidx.test.espresso:espresso-core:3.3.0"
-    }
-
-    object Plugins {
-        const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.2"
-        const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
-        const val dokkaAndroidGradlePlugin = "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.17"
-        const val hiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
     }
 }

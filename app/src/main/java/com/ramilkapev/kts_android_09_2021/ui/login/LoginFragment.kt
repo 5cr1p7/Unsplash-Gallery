@@ -1,14 +1,12 @@
 package com.ramilkapev.kts_android_09_2021.ui.login
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +15,8 @@ import com.ramilkapev.kts_android_09_2021.databinding.FragmentLoginBinding
 import timber.log.Timber
 import androidx.core.widget.doOnTextChanged
 import com.ramilkapev.kts_android_09_2021.R
+import net.openid.appauth.AuthorizationException
+import net.openid.appauth.AuthorizationResponse
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -30,6 +30,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         Timber.d("onViewCreated ${hashCode()}")
 
         with(viewLoginBinding) {
+
             emailTv.doOnTextChanged { text, start, before, count ->
 
                 if (!loginViewModel.validateEmail(emailTv.text.toString())) {
@@ -60,17 +61,41 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 Timber.d("$passIsValid")
             }
 
+            loginViewModel.loadingLiveData.observe(viewLifecycleOwner, ::updateIsLoading)
+            loginViewModel.openAuthPageLiveData.observe(viewLifecycleOwner, ::openAuthPage)
+            loginViewModel.authSuccessLiveData.observe(viewLifecycleOwner) {
+                loginBtn.isEnabled = false
+                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+            }
+
             loginBtn.setOnClickListener {
-                login()
+                loginViewModel.openLoginPage()
             }
         }
     }
 
-    private fun login() {
-        with(viewLoginBinding) {
-            loginBtn.isEnabled = false
-            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+    private fun updateIsLoading(isLoading: Boolean) = with(viewLoginBinding) {
+        loginBtn.isVisible = !isLoading
+        loginProgress.isVisible = isLoading
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AUTH_REQUEST_CODE && data != null) {
+            val tokenExchangeRequest = AuthorizationResponse.fromIntent(data)
+                ?.createTokenExchangeRequest()
+            val exception = AuthorizationException.fromIntent(data)
+            when {
+                tokenExchangeRequest != null && exception == null ->
+                    loginViewModel.onAuthCodeReceived(tokenExchangeRequest)
+                exception != null -> loginViewModel.onAuthCodeFailed(exception)
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    private fun openAuthPage(intent: Intent) {
+        startActivityForResult(intent, AUTH_REQUEST_CODE)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -88,6 +113,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             Timber.d("restore: ${loginViewModel.email}")
         }
         Timber.d("onViewStateRestored ${hashCode()}")
+    }
+
+    companion object {
+        private const val AUTH_REQUEST_CODE = 212
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -14,7 +14,8 @@ import com.ramilkapev.kts_android_09_2021.R
 import com.ramilkapev.kts_android_09_2021.networking.models.Result
 
 class ImageItemDelegate(
-    private val onIncreaseLike: (Result) -> Unit
+    private val onIncreaseLike: (Result) -> Unit,
+    private val onClick: (Result) -> Unit
 ) : AbsListItemAdapterDelegate<Any, Any, ImageItemDelegate.ViewHolder>() {
 
     override fun isForViewType(item: Any, items: MutableList<Any>, position: Int): Boolean {
@@ -48,15 +49,16 @@ class ImageItemDelegate(
         private var likeBtn: ImageButton = view.findViewById(R.id.likeBtn)
 
         init {
+            image.setOnClickListener { currentItem?.let (onClick) }
             likeBtn.setOnClickListener { currentItem?.let(onIncreaseLike) }
         }
 
         fun bind(item: Result) = with(view) {
             currentItem = item
-            Glide.with(this).load(item.user?.profileImage?.medium).into(avatar)
-            name.text = item.user?.name
-            Glide.with(this).load("${item.urls?.regular}").into(image)
-            if (item.likedByUser == true) {
+            Glide.with(this).load(item.user.profileImage.medium).into(avatar)
+            name.text = item.user.name
+            Glide.with(this).load(item.urls.regular).into(image)
+            if (item.likedByUser) {
                 likeBtn.setImageDrawable(
                     ResourcesCompat.getDrawable(
                         resources,

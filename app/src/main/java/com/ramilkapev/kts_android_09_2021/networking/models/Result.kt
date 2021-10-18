@@ -18,12 +18,12 @@ data class Result(
 //    val createdAt: String?,
 //    @Json(name = "current_user_collections")
 //    val currentUserCollections: List<Any>?,
-//    @Json(name = "description")
-//    val description: Any?,
+    @Json(name = "description")
+    val description: Any?,
 //    @Json(name = "height")
 //    val height: Int?,
     @Json(name = "id")
-    val id: String?,
+    val id: String,
     @Json(name = "liked_by_user")
     var likedByUser: Boolean,
     @Json(name = "likes")
@@ -41,9 +41,9 @@ data class Result(
 //    @Json(name = "updated_at")
 //    val updatedAt: String?,
     @Json(name = "urls")
-    val urls: Urls?,
+    val urls: Urls,
     @Json(name = "user")
-    val user: User?,
+    val user: User,
 //    @Json(name = "width")
 //    val width: Int?
 )
